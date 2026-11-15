@@ -464,7 +464,7 @@ with tabs[3]:
     )
 
 
-with tabs[4]:
+'''with tabs[4]:
     st.title("Agricultural compatibility assessment")
     st.write(
         "Earth agricultural-land suitability and Martian substrate "
@@ -558,4 +558,227 @@ st.divider()
 st.caption(
     "TERRA-SPACE | Research prototype. Data provenance and measurement "
     "limitations must accompany all comparisons."
-)
+)'''
+
+with tabs[4]:
+    st.title("Agricultural compatibility assessment")
+
+    st.write(
+        "This section combines published agricultural soil data from "
+        "the Salalah region of Dhofar with the geological observations "
+        "from the AMADEE-18 analogue study. These are regional "
+        "agricultural measurements, not direct measurements of the "
+        "AMADEE-18 geological samples."
+    )
+
+    st.info(
+        "Data source: Published Salalah Integrated Soil Survey and "
+        "agricultural soil studies discussed in Janke et al. (2022). "
+        "The reported values describe surveyed agricultural soils "
+        "in the wider Dhofar region."
+    )
+
+    # ------------------------------------------------
+    # 1. SOIL CHEMICAL PROPERTIES
+    # ------------------------------------------------
+    st.subheader("1. Soil chemical properties")
+
+    c1, c2, c3 = st.columns(3)
+
+    c1.metric("Average soil pH", "8.4")
+    c2.metric("Average EC", "2.37 mmhos/cm")
+    c3.metric("Organic matter", "1.81%")
+
+    st.caption(
+        "Values are averages reported by the agricultural soil "
+        "study discussed in the review. EC is equivalent to dS/m."
+    )
+
+    # ------------------------------------------------
+    # 2. SOIL TEXTURE
+    # ------------------------------------------------
+    st.subheader("2. Soil texture composition")
+
+    texture = pd.DataFrame({
+        "Soil component": ["Sand", "Silt", "Clay"],
+        "Percentage": [52, 30, 19]
+    })
+
+    fig_texture = px.pie(
+        texture,
+        names="Soil component",
+        values="Percentage",
+        title="Reported average soil texture composition",
+        hole=0.4
+    )
+
+    st.plotly_chart(fig_texture, use_container_width=True)
+
+    st.caption(
+        "The reported percentages total 101% because of rounding."
+    )
+
+    # ------------------------------------------------
+    # 3. WATER AND INFILTRATION
+    # ------------------------------------------------
+    st.subheader("3. Water retention and infiltration")
+
+    water_data = pd.DataFrame({
+        "Water-holding capacity": [
+            "High / moderate",
+            "Low / very low"
+        ],
+        "Area (%)": [56, 42]
+    })
+
+    infiltration_data = pd.DataFrame({
+        "Infiltration classification": [
+            "Low / moderately low"
+        ],
+        "Area (%)": [71]
+    })
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        fig_water = px.bar(
+            water_data,
+            x="Water-holding capacity",
+            y="Area (%)",
+            title="Water-holding capacity distribution",
+            text="Area (%)"
+        )
+        st.plotly_chart(fig_water, use_container_width=True)
+
+    with col2:
+        fig_infiltration = px.bar(
+            infiltration_data,
+            x="Infiltration classification",
+            y="Area (%)",
+            title="Infiltration rate classification",
+            text="Area (%)"
+        )
+        st.plotly_chart(fig_infiltration, use_container_width=True)
+
+    st.caption(
+        "Percentages represent the distribution of surveyed land "
+        "within the reported classifications, not measurements "
+        "from a single soil sample."
+    )
+
+    # ------------------------------------------------
+    # 4. SOIL SALINITY
+    # ------------------------------------------------
+    st.subheader("4. Soil salinity distribution")
+
+    salinity = pd.DataFrame({
+        "Salinity classification": [
+            "None / slightly saline",
+            "Moderately saline",
+            "Strongly saline"
+        ],
+        "Area (%)": [83, 14, 2.5]
+    })
+
+    fig_salinity = px.bar(
+        salinity,
+        x="Salinity classification",
+        y="Area (%)",
+        text="Area (%)",
+        title="Reported soil salinity distribution"
+    )
+
+    st.plotly_chart(fig_salinity, use_container_width=True)
+
+    # ------------------------------------------------
+    # 5. NUTRIENT AVAILABILITY
+    # ------------------------------------------------
+    st.subheader("5. Nutrient availability")
+
+    nutrient_data = pd.DataFrame({
+        "Nutrient": [
+            "Available phosphorus",
+            "Potassium",
+            "Nitrogen"
+        ],
+        "Reported condition": [
+            "9.6 ppm; medium to high",
+            "Low to very low",
+            "Deficiency reported in most sampled crops"
+        ]
+    })
+
+    st.dataframe(
+        nutrient_data,
+        use_container_width=True,
+        hide_index=True
+    )
+
+    st.warning(
+        "Nitrogen and potassium deficiency observations include "
+        "crop leaf-tissue findings. They should not be interpreted "
+        "as direct soil concentration measurements."
+    )
+
+    # ------------------------------------------------
+    # 6. AGRICULTURAL INTERPRETATION
+    # ------------------------------------------------
+    st.subheader("6. Agricultural interpretation")
+
+    st.markdown("""
+    **Potential strengths**
+    - Most surveyed soils were classified as non-saline or slightly saline.
+    - Available phosphorus was reported at 9.6 ppm.
+    - A substantial proportion of the surveyed area had moderate to high
+      water-holding capacity.
+
+    **Potential limitations**
+    - Average soil pH was alkaline (8.4).
+    - Average organic matter was relatively low (1.81%).
+    - Potassium availability was reported as low to very low.
+    - Nitrogen and potassium deficiencies were observed in crop studies.
+    - Infiltration was classified as low or moderately low across much
+      of the surveyed area.
+
+    **Research implications**
+
+    Organic amendments, improved nutrient management and water-retention
+    strategies may help address some of these limitations. These
+    characteristics are relevant when evaluating Dhofar as a terrestrial
+    analogue for future regolith-based agriculture research.
+    """)
+
+    # ------------------------------------------------
+    # 7. DATA LIMITATIONS
+    # ------------------------------------------------
+    st.subheader("7. Data limitations")
+
+    st.info(
+        "These measurements describe agricultural soils in the wider "
+        "Salalah region. They are not direct measurements of the "
+        "AMADEE-18 samples. The regional data cannot establish the "
+        "agricultural suitability of each geological sample."
+    )
+
+    st.error(
+        "No validated agricultural compatibility score is calculated. "
+        "Further sample-specific measurements of pH, EC, nutrients, "
+        "organic matter, water retention, bulk density and potential "
+        "chemical hazards are required."
+    )
+
+    # ------------------------------------------------
+    # 8. SOURCE
+    # ------------------------------------------------
+    st.subheader("Research source")
+
+    st.markdown("""
+    Janke, R. et al. (2022).
+    *A 25-Year History of the Use of Organic Soil Amendments in Oman:
+    A Review.*
+
+    Journal of Agricultural and Marine Sciences, 27(1), 38–61.
+
+    [Read the research paper](https://distantreader.org/stacks/journals/jams/jams-4730.pdf)
+    """)
+
