@@ -247,6 +247,15 @@ with tabs[0]:
 
 with tabs[1]:
     st.title("Earth analogue — Dhofar, Oman")
+    st.subheader("Why Dhofar?")
+    st.write(
+        "Dhofar was chosen because it was studied during the AMADEE-18 "
+        "simulated Mars mission, where researchers collected and analyzed "
+        "geological samples to investigate its similarities to Martian "
+        "environments. Its published sample chemistry provides real "
+        "terrestrial data that can be compared with Martian measurements "
+        "and further investigated for its relevance to regolith-based agriculture."
+    )
     st.write(
         "The dataset contains AMADEE-18 sample SEM–EDS oxide-equivalent "
         "records. These are semiquantitative prepared-powder measurements, "
@@ -301,6 +310,14 @@ with tabs[1]:
 
 with tabs[2]:
     st.title("Mars reference — Rocknest, Gale Crater")
+    st.subheader("Why Rocknest?")
+    st.write(
+        "Rocknest, in Gale Crater on Mars, was selected because NASA's "
+        "Curiosity rover analysed its soil using APXS and CheMin instruments, "
+        "providing valuable data on its chemical composition and mineralogy. "
+        "These measurements provide a scientific reference for comparing "
+        "Martian regolith with terrestrial materials."
+    )
     st.write(
         "Rocknest is used as the primary reference for Curiosity APXS bulk "
         "chemistry and CheMin crystalline mineralogy."
