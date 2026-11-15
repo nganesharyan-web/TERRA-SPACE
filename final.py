@@ -466,102 +466,6 @@ with tabs[3]:
 
 '''with tabs[4]:
     st.title("Agricultural compatibility assessment")
-    st.write(
-        "Earth agricultural-land suitability and Martian substrate "
-        "compatibility are separate questions. The current AMADEE-18 "
-        "dataset does not contain enough measurements to calculate "
-        "either score reliably."
-    )
-
-    required = pd.DataFrame(
-        [
-            ["Soil pH", "Missing", "Acidity / alkalinity"],
-            ["Electrical conductivity (EC)", "Missing", "Salinity"],
-            ["Organic matter / organic carbon", "Missing", "Soil organic content"],
-            ["Nitrogen, phosphorus, potassium", "Missing", "Plant nutrient availability"],
-            ["Texture (sand / silt / clay)", "Missing", "Physical soil classification"],
-            ["Water retention / infiltration", "Missing", "Water availability to roots"],
-            ["Perchlorate and soluble salts", "Missing for Dhofar samples", "Potential toxicity / chemical hazards"],
-            ["Bulk density / porosity", "Missing", "Rooting and aeration conditions"],
-        ],
-        columns=["Measurement", "Data status", "Why it matters"],
-    )
-    st.dataframe(required, use_container_width=True, hide_index=True)
-    st.error(
-        "Agricultural suitability: INSUFFICIENT DATA — no score calculated."
-    )
-    st.info(
-        "The existing mineral and oxide measurements can support "
-        "preliminary geochemical comparison, but they cannot establish "
-        "whether the Dhofar samples are agricultural land or can support "
-        "crop growth."
-    )
-
-    st.subheader("Add future soil-test measurements")
-    default_sample = (
-        str(sample_options[0]) if "sample_options" in locals()
-        and sample_options else ""
-    )
-
-    with st.form("soil_test_form"):
-        soil_sample_id = st.text_input("Sample ID", value=default_sample)
-        soil_ph = st.number_input(
-            "pH", min_value=0.0, max_value=14.0, value=7.0, step=0.1
-        )
-        soil_ec = st.number_input(
-            "Electrical conductivity (dS/m)",
-            min_value=0.0,
-            value=0.0,
-            step=0.1,
-        )
-        soil_organic = st.number_input(
-            "Organic matter (%)",
-            min_value=0.0,
-            value=0.0,
-            step=0.1,
-        )
-        notes = st.text_area("Notes / laboratory source")
-        submitted = st.form_submit_button("Add measurement record")
-
-        if submitted:
-            if not soil_sample_id.strip():
-                st.error("Please enter a sample ID before saving.")
-            else:
-                output_path = (
-                    DATA / "earth" / "user_soil_test_entries.csv"
-                )
-                output_path.parent.mkdir(parents=True, exist_ok=True)
-                new_record = pd.DataFrame(
-                    [[soil_sample_id, soil_ph, soil_ec, soil_organic, notes]],
-                    columns=[
-                        "sample_id",
-                        "pH",
-                        "EC_dS_m",
-                        "organic_matter_pct",
-                        "notes_source",
-                    ],
-                )
-                new_record.to_csv(
-                    output_path,
-                    mode="a",
-                    header=not output_path.exists(),
-                    index=False,
-                )
-                st.success(
-                    f"Saved the measurement entry to "
-                    f"{output_path.name}. This does not automatically "
-                    "create a suitability score."
-                )
-
-
-st.divider()
-st.caption(
-    "TERRA-SPACE | Research prototype. Data provenance and measurement "
-    "limitations must accompany all comparisons."
-)'''
-
-with tabs[4]:
-    st.title("Agricultural compatibility assessment")
 
     st.write(
         "This section combines published agricultural soil data from "
@@ -780,5 +684,198 @@ with tabs[4]:
     Journal of Agricultural and Marine Sciences, 27(1), 38–61.
 
     [Read the research paper](https://distantreader.org/stacks/journals/jams/jams-4730.pdf)
-    """)
+    """)'''
+
+
+with tabs[4]:
+    st.title("Agricultural compatibility assessment")
+
+    st.write(
+        "This section examines two separate questions: the agricultural "
+        "characteristics of soils in the Dhofar region, and whether the "
+        "specific AMADEE-18 geological samples have been characterised "
+        "sufficiently to assess their potential for plant growth."
+    )
+
+    st.warning(
+        "Important distinction: The agricultural measurements below "
+        "come from a regional Salalah soil survey reported in a 2022 "
+        "review. They are NOT measurements of the AMADEE-18 samples."
+    )
+
+    st.subheader("1. Regional agricultural soil data — Dhofar")
+
+    st.write(
+        "The Salalah detailed soil survey covered approximately "
+        "4,200 hectares. Its findings provide regional agricultural "
+        "context, rather than direct evidence about the AMADEE-18 samples."
+    )
+
+    col1, col2, col3 = st.columns(3)
+
+    col1.metric("Survey area", "4,200 ha")
+    col2.metric("High / moderate water retention", "56%")
+    col3.metric("Available phosphorus", "9.6 ppm")
+
+    st.caption(
+        "Source: Janke et al. (2022), reporting the Salalah soil survey "
+        "(MAF, 1992)."
+    )
+
+    st.subheader("Soil physical characteristics")
+
+    physical_data = pd.DataFrame(
+        [
+            ["Coarse loamy topsoil", "Approximately 60%"],
+            ["Fine loamy topsoil", "Approximately 7%"],
+            ["High or moderate available water-holding capacity", "56%"],
+            ["Low or very low available water-holding capacity", "42%"],
+            ["Low to moderately low infiltration rate", "71%"],
+            ["Moderate infiltration rate", "13%"],
+            ["Moderately high to very high infiltration rate", "14%"],
+        ],
+        columns=["Property", "Survey finding"],
+    )
+
+    st.dataframe(
+        physical_data,
+        use_container_width=True,
+        hide_index=True,
+    )
+
+    st.subheader("Soil salinity")
+
+    salinity_data = pd.DataFrame(
+        {
+            "Salinity category": [
+                "None to slightly saline",
+                "Moderately saline",
+                "Strongly saline",
+            ],
+            "Percentage": [83, 14, 2.5],
+        }
+    )
+
+    st.bar_chart(
+        salinity_data.set_index("Salinity category"),
+        y="Percentage",
+    )
+
+    st.caption(
+        "Salinity categories were determined using electrical "
+        "conductivity (EC). Percentages are reported as rounded "
+        "survey values."
+    )
+
+    st.subheader("Chemical and nutrient characteristics")
+
+    chemical_data = pd.DataFrame(
+        [
+            ["Soil pH", "Generally slightly to moderately alkaline"],
+            ["Electrical conductivity", "Most soils none to slightly saline"],
+            ["Organic matter", "Low by international standards"],
+            ["Cation exchange capacity (CEC)", "Low on average"],
+            ["Calcium and magnesium", "Main soil exchangeable cations"],
+            ["Potassium", "Moderate"],
+            ["Available phosphorus", "Moderate to high; average 9.6 ppm"],
+        ],
+        columns=["Measurement", "Reported finding"],
+    )
+
+    st.dataframe(
+        chemical_data,
+        use_container_width=True,
+        hide_index=True,
+    )
+
+    st.info(
+        "Interpretation: The regional survey indicates that Dhofar "
+        "contains agricultural soils with varying water-retention, "
+        "infiltration and salinity characteristics. However, low "
+        "organic matter and generally low CEC may present soil-quality "
+        "limitations."
+    )
+
+    st.divider()
+
+    st.subheader("2. What does this mean for AMADEE-18?")
+
+    st.write(
+        "The regional agricultural survey cannot be used as a substitute "
+        "for laboratory measurements of the actual AMADEE-18 samples. "
+        "The geological and mineralogical data in this project do not "
+        "currently establish whether those samples can support crops."
+    )
+
+    required = pd.DataFrame(
+        [
+            ["Soil pH", "Not available for AMADEE-18 samples"],
+            ["Electrical conductivity (EC)", "Not available"],
+            ["Organic matter / organic carbon", "Not available"],
+            ["Nitrogen, phosphorus and potassium", "Not sufficiently characterised"],
+            ["Texture (sand / silt / clay)", "Not available"],
+            ["Water retention / infiltration", "Not available"],
+            ["Perchlorate and soluble salts", "Not established"],
+            ["Bulk density / porosity", "Not available"],
+            ["Plant growth experiments", "Not established for these samples"],
+        ],
+        columns=["Required measurement", "AMEADE-18 sample data status"],
+    )
+
+    st.dataframe(
+        required,
+        use_container_width=True,
+        hide_index=True,
+    )
+
+    st.error(
+        "Agricultural compatibility of AMADEE-18 samples: "
+        "INSUFFICIENT DATA — no suitability score calculated."
+    )
+
+    st.subheader("3. Research implications")
+
+    st.write(
+        """
+        The regional Dhofar survey provides useful background for
+        understanding the terrestrial environment in which the
+        AMADEE-18 expedition took place.
+
+        However, a geological similarity between an Earth analogue
+        and a Martian location does not automatically imply similar
+        agricultural potential.
+
+        Future research should investigate:
+        - Sample-specific pH and electrical conductivity.
+        - Nutrient availability and organic carbon.
+        - Water retention and physical soil properties.
+        - Potentially toxic compounds, including perchlorates.
+        - Controlled plant-growth experiments using analogue material.
+        """
+    )
+
+    st.subheader("4. Data source")
+
+    st.markdown(
+        """
+        **Janke, R. et al. (2022).** *A 25-Year History of the Use of
+        Organic Soil Amendments in Oman: A Review.*
+
+        Journal of Agricultural and Marine Sciences, 27(1), 38–61.
+
+        The Salalah soil survey findings are discussed on page 40
+        of the published article and attributed to MAF (1992).
+
+        [Read the research paper (PDF)](
+        https://distantreader.org/stacks/journals/jams/jams-4730.pdf
+        )
+        """
+    )
+
+    st.caption(
+        "Data limitation: Regional agricultural survey results are "
+        "historical and cover a limited survey area. They must not be "
+        "interpreted as measurements of individual AMADEE-18 samples."
+    )
+
 
