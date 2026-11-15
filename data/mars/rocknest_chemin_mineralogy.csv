@@ -1,0 +1,9 @@
+mineral,abundance_wt_pct_crystalline,reported_uncertainty_1sigma,reference,scope,source_note
+Plagioclase,40.7,0.5,"Rocknest, Gale Crater, Mars",Crystalline phases only; not whole-soil mass fraction,"CheMin compilation in Blake et al. (2024), Table 2"
+Forsterite / olivine,20.5,0.4,"Rocknest, Gale Crater, Mars",Crystalline phases only; not whole-soil mass fraction,"CheMin compilation in Blake et al. (2024), Table 2"
+Augite,18.1,1.3,"Rocknest, Gale Crater, Mars",Crystalline phases only; not whole-soil mass fraction,"CheMin compilation in Blake et al. (2024), Table 2"
+Pigeonite,12.3,1.2,"Rocknest, Gale Crater, Mars",Crystalline phases only; not whole-soil mass fraction,"CheMin compilation in Blake et al. (2024), Table 2"
+Magnetite,2.8,0.5,"Rocknest, Gale Crater, Mars",Crystalline phases only; not whole-soil mass fraction,"CheMin compilation in Blake et al. (2024), Table 2"
+Anhydrite,1.4,0.3,"Rocknest, Gale Crater, Mars",Crystalline phases only; not whole-soil mass fraction,"CheMin compilation in Blake et al. (2024), Table 2"
+Hematite,1.6,0.1,"Rocknest, Gale Crater, Mars",Crystalline phases only; not whole-soil mass fraction,"CheMin compilation in Blake et al. (2024), Table 2"
+Quartz,1.3,0.3,"Rocknest, Gale Crater, Mars",Crystalline phases only; not whole-soil mass fraction,"CheMin compilation in Blake et al. (2024), Table 2"
