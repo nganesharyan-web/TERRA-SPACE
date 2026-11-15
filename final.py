@@ -22,7 +22,7 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    .main {background:#0b1120; color:#e8eef7;}
+    .main {background:#FFFFFF; color:#172B4D;}
     .block-container {padding-top:1.2rem;}
     div[data-testid="stMetric"] {
         background:#172438; padding:12px; border-radius:10px;
