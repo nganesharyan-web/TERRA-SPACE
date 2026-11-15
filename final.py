@@ -25,8 +25,8 @@ st.markdown(
     .main {background:#FFFFFF; color:#172B4D;}
     .block-container {padding-top:1.2rem;}
     div[data-testid="stMetric"] {
-        background:#172438; padding:12px; border-radius:10px;
-        border:1px solid #2b405a;
+        background:#F1F5F9; padding:12px; border-radius:10px;
+        border:1px solid #CBD5E1;
     }
     </style>
     """,
