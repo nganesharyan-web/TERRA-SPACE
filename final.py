@@ -246,7 +246,7 @@ with tabs[0]:
 
 
 with tabs[1]:
-    st.title("Earth analogue — Dhofar, Oman")
+    st.title("Earth analog — Dhofar, Oman")
     st.subheader("Why Dhofar?")
     st.write(
         "Dhofar was chosen because it was studied during the AMADEE-18 "
